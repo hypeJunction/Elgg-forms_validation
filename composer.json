@@ -1,0 +1,24 @@
+{
+	"name": "hypejunction/forms_validation",
+	"version": "0.0.0",
+	"type": "elgg-plugin",
+	"description": "Form validation components for Elgg",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"elgg", "plugin", "forms", "validation"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "info@hypejunction.com"
+		}
+	],
+	"require": {
+		"bower-asset/parsleyjs": "2.2.0-rc4"
+	},
+	"require-dev": {
+		"composer/installers": "1.*"
+	}
+}
+

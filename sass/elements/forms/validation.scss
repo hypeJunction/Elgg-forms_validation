@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.elgg-field-has-errors {
+	.elgg-field-label {
+		color: $error-color;
+	}
+	[class^="elgg-input-"] {
+		border-color: $error-color;
+	}
+}
+.elgg-field-feedback {
+	list-style: none;
+	font-size: 90%;
+	font-weight: bold;
+}
+.elgg-field-error {
+	padding: 5px;
+	color: $error-color;
+}
