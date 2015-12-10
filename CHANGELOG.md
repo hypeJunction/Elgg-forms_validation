@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/hypeJunction/Elgg-forms_validation/compare/1.1.0...v1.2.0) (2015-12-10)
+
+
+### Bug Fixes
+
+* **releases:** composer installers must be required ([8f0ce79](https://github.com/hypeJunction/Elgg-forms_validation/commit/8f0ce79))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/hypeJunction/Elgg-forms_validation/compare/1.0.0...v1.1.0) (2015-12-10)
 
