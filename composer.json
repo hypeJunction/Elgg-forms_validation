@@ -15,9 +15,7 @@
 		}
 	],
 	"require": {
+		"composer/installers": "1.*",
 		"bower-asset/parsleyjs": "~2.3"
-	},
-	"require-dev": {
-		"composer/installers": "1.*"
 	}
 }
