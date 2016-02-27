@@ -15,10 +15,9 @@
 		}
 	],
 	"require": {
-		"bower-asset/parsleyjs": "2.2.0-rc4"
+		"bower-asset/parsleyjs": "~2.3"
 	},
 	"require-dev": {
 		"composer/installers": "1.*"
 	}
 }
-
