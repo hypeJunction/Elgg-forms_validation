@@ -7,25 +7,8 @@
  * @copyright Copyright (c) 2015, Ismayil Khayredinov
  */
 
-require_once __DIR__ . '/autoloader.php';
-
-elgg_register_event_handler('init', 'system', 'forms_validation_init');
-
-/**
- * Initialize the plugin
- * @return void
- */
-function forms_validation_init() {
-
-	elgg_register_plugin_hook_handler('view_vars', 'input/form', 'forms_validation_vars');
-	elgg_register_plugin_hook_handler('view_vars', 'elements/forms/input', 'forms_validation_vars');
-
-	elgg_extend_view('input/form', 'elements/forms/validation');
-
-	elgg_extend_view('theme_sandbox/forms', 'theme_sandbox/forms/validation');
-
-	elgg_extend_view('elgg.css', 'elements/forms/validation.css');
-}
+elgg_register_plugin_hook_handler('view_vars', 'input/form', 'forms_validation_vars');
+elgg_register_plugin_hook_handler('view_vars', 'elements/forms/input', 'forms_validation_vars');
 
 /**
  * Filters some of the vars for compatibility with parsley
@@ -59,6 +42,6 @@ function forms_validation_vars($hook, $type, $return, $params) {
 	}
 
 	unset($return['errors']);
-	
+
 	return $return;
 }

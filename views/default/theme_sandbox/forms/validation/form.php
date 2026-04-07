@@ -1,9 +1,5 @@
 <?php
 
-if (!is_callable('elgg_view_input')) {
-	return;
-}
-
 echo elgg_view_input('plaintext', array(
 	'required' => true,
 	'minlength' => 50,
