@@ -1,6 +1,7 @@
 <?php
 
-echo elgg_view_input('plaintext', array(
+echo elgg_view_field(array(
+	'#type' => 'plaintext',
 	'required' => true,
 	'minlength' => 50,
 	'maxlength' => 100,
@@ -62,7 +63,8 @@ $states = array(
 	'Wyoming' => 'WY'
 );
 
-echo elgg_view_input('checkboxes', array(
+echo elgg_view_field(array(
+	'#type' => 'checkboxes',
 	'required' => true,
 	'data-parsley-mincheck' => '5',
 	'name' => 'state',
