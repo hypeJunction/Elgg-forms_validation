@@ -29,10 +29,7 @@ class FormsTest extends UnitTestCase {
 	 * @return Hook
 	 */
 	protected function makeHook($value): Hook {
-		$hook = $this->getMockBuilder(Hook::class)
-			->disableOriginalConstructor()
-			->onlyMethods(['getValue'])
-			->getMock();
+		$hook = $this->getMockBuilder(Hook::class)->getMock();
 		$hook->method('getValue')->willReturn($value);
 		return $hook;
 	}
