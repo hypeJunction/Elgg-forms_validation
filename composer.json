@@ -5,7 +5,10 @@
 	"description": "Form validation components for Elgg",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "forms", "validation"
+		"elgg",
+		"plugin",
+		"forms",
+		"validation"
 	],
 	"license": "GPL-2.0",
 	"authors": [
@@ -15,8 +18,10 @@
 		}
 	],
 	"require": {
-		"composer/installers": "~1.0 || ~2.0",
-		"bower-asset/parsleyjs": "~2.3"
+		"composer/installers": "^2.0",
+		"bower-asset/parsleyjs": "~2.3",
+		"php": ">=7.4",
+		"elgg/elgg": "^4.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -30,7 +35,8 @@
 	},
 	"extra": {
 		"elgg-plugin": {
-			"elgg-release": "~4.0"
+			"elgg-release": "~4.0",
+			"id": "forms_validation"
 		}
 	}
 }
