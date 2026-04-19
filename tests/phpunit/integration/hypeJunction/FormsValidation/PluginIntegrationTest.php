@@ -60,7 +60,7 @@ class PluginIntegrationTest extends IntegrationTestCase {
 	}
 
 	public function testValidationViewRendersWithParsleyFlag(): void {
-		$output = \elgg_view('elements/forms/validation', [
+$output = \elgg_view('elements/forms/validation', [
 			'data-parsley-validate' => 1,
 		]);
 		$this->assertIsString($output);

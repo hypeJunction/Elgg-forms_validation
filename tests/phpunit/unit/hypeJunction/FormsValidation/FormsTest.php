@@ -91,7 +91,7 @@ class FormsTest extends UnitTestCase {
 
 	public function testValidationRulesExpandedToParsleyDataAttributes(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook([
+$hook = $this->makeHook([
 			'validation_rules' => [
 				'minlength' => 5,
 				'maxlength' => 20,
@@ -129,7 +129,7 @@ class FormsTest extends UnitTestCase {
 
 	public function testCombinedFlagsAllApplied(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook([
+$hook = $this->makeHook([
 			'validate' => true,
 			'required' => true,
 			'validation_rules' => ['minlength' => 3],
