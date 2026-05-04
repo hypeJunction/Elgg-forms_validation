@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var elgg = require('elgg');
+	var i18n = require('elgg/i18n');
 	var $ = require('jquery');
 	require('parsley');
 
@@ -39,7 +40,7 @@ define(function (require) {
 			message = this.catalog['_'][constraint.name];
 		}
 		message = message || this.catalog['_'].defaultMessage;
-		return message ? elgg.echo(message, constraint.requirementList) : this.catalog.en.defaultMessage;
+		return message ? i18n.echo(message, constraint.requirementList) : this.catalog.en.defaultMessage;
 	}.bind(window.Parsley._validatorRegistry);
 
 	window.Parsley.on('field:init', function () {
@@ -48,7 +49,7 @@ define(function (require) {
 
 	window.Parsley.on('field:error', function () {
 		var errors = window.ParsleyUI.getErrorsMessages(this) || [];
-		errors = $.unique(errors);
+		errors = $.uniqueSort(errors);
 
 		var $row = this.$element.closest('.elgg-field');
 		if (!$row.length) {
