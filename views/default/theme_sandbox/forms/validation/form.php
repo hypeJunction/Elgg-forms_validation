@@ -1,6 +1,6 @@
 <?php
 
-echo elgg_view_field(array(
+echo elgg_view_field([
 	'#type' => 'plaintext',
 	'required' => true,
 	'minlength' => 50,
@@ -8,9 +8,9 @@ echo elgg_view_field(array(
 	'rows' => 2,
 	'label' => 'About me',
 	'help' => 'Write a paragraph between 50 and 100 characters',
-));
+]);
 
-$states = array(
+$states = [
 	'Alabama' => 'AL',
 	'Alaska' => 'AK',
 	'Arizona' => 'AZ',
@@ -61,9 +61,9 @@ $states = array(
 	'West Virginia' => 'WV',
 	'Wisconsin' => 'WI',
 	'Wyoming' => 'WY'
-);
+];
 
-echo elgg_view_field(array(
+echo elgg_view_field([
 	'#type' => 'checkboxes',
 	'required' => true,
 	'data-parsley-mincheck' => '5',
@@ -72,4 +72,4 @@ echo elgg_view_field(array(
 	'label' => 'States',
 	'help' => 'Select minimum 5 states',
 	'align' => 'horizontal',
-));
+]);

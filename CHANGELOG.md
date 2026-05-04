@@ -1,3 +1,16 @@
+## [5.0.0] — 2026-05-04
+
+### Migration: 4.x → 5.x
+
+- `'hooks'` key in `elgg-plugin.php` renamed to `'events'` (hooks/events merged in Elgg 5.x)
+- `\Elgg\Hook` type hint replaced with `\Elgg\Event` in `Forms::__invoke()`
+- Integration tests updated: `elgg_trigger_plugin_hook()` → `elgg_trigger_event_results()`
+- Unit tests updated to mock `\Elgg\Event` (with `disableOriginalConstructor()`)
+- Composer constraints bumped: `elgg/elgg ^5.0`, PHP `>=8.2`
+- `extra.elgg-plugin.elgg-release` set to `~5.0`
+- Docker test stack rebuilt on `php:8.2-apache` + Elgg `~5.1.0`, with `phpcs` + `elgg/sniffs` available
+- Test coverage parity with 4.x baseline: 18 PHPUnit tests passing on Elgg 5 bootstrap
+
 ## [4.0.0] — 2026-04-15
 
 ### Migration: 3.x → 4.x

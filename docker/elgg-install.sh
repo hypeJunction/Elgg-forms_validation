@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Per-plugin Elgg 4.x install + activation script.
+# Per-plugin Elgg 5.x install + activation script.
 # PLUGIN_ID must be set in the container environment (passed by docker-compose
 # from <plugin>/docker/.env). Only that one plugin is activated — no fleet
 # activation, no plugin-order.txt, no cross-plugin side effects.
@@ -20,21 +20,8 @@ echo "MySQL is ready."
 
 cd /var/www/html
 
-# Elgg core ships bundled plugins under vendor/elgg/elgg/mod/.
-# The plugin loader only scans /var/www/html/mod/, so without this step
-# elgg_get_plugin_from_id('theme_sandbox') returns null.
-# Symlink each core plugin dir into mod/ unless already taken by a bind-mount.
-if [ -d /var/www/html/vendor/elgg/elgg/mod ]; then
-    for core_plugin_dir in /var/www/html/vendor/elgg/elgg/mod/*/; do
-        core_plugin_id=$(basename "${core_plugin_dir}")
-        if [ ! -e "/var/www/html/mod/${core_plugin_id}" ]; then
-            ln -s "${core_plugin_dir%/}" "/var/www/html/mod/${core_plugin_id}"
-        fi
-    done
-fi
-
 if [ ! -f /var/www/html/.elgg-installed ]; then
-    echo "Installing Elgg 4.x..."
+    echo "Installing Elgg 5.x..."
 
     mkdir -p elgg-config
     cat > elgg-config/settings.php <<'SETTINGS_TEMPLATE'
@@ -69,7 +56,7 @@ SETTINGS_VALUES
             'dbhost' => '${ELGG_DB_HOST:-db}',
             'dbport' => '3306',
             'dbprefix' => 'elgg_',
-            'sitename' => 'Elgg 4.x Plugin Test',
+            'sitename' => 'Elgg 5.x Plugin Test',
             'siteemail' => '${ELGG_ADMIN_EMAIL:-admin@example.com}',
             'wwwroot' => '${ELGG_SITE_URL:-http://localhost:8480/}',
             'dataroot' => '${ELGG_DATA_ROOT:-/var/www/data/}',
@@ -81,7 +68,7 @@ SETTINGS_VALUES
 
         \$installer = new \ElggInstaller();
         \$installer->batchInstall(\$params);
-        echo 'Elgg 4.x installed successfully.' . PHP_EOL;
+        echo 'Elgg 5.x installed successfully.' . PHP_EOL;
     " 2>&1 || echo "Install completed (check for errors above)."
 
     echo "Activating plugins..."
@@ -92,7 +79,7 @@ SETTINGS_VALUES
         _elgg_services()->plugins->generateEntities();
 
         // Resolve dep plugin IDs from the plugin's own metadata.
-        // Priority: elgg-plugin.php 'plugin.dependencies' (Elgg 4.x) then manifest.xml <requires type='plugin'>.
+        // Priority: elgg-plugin.php 'plugin.dependencies' (Elgg 5.x) then manifest.xml <requires type='plugin'>.
         // IDs are lowercased to match mod/ directory names.
         // Deps not present in mod/ are skipped with a warning — this naturally excludes
         // deps that are unsafe to activate (e.g. unmigrated plugins not volume-mounted).
@@ -135,18 +122,6 @@ SETTINGS_VALUES
             }
         }
 
-        // Activate theme_sandbox so Playwright tests can access the theme sandbox route.
-        \$ts = elgg_get_plugin_from_id('theme_sandbox');
-        if (\$ts && !\$ts->isActive()) {
-            try {
-                \$ts->setPriority('last');
-                \$ts->activate();
-                echo 'Plugin theme_sandbox activated.' . PHP_EOL;
-            } catch (\Throwable \$e) {
-                echo 'WARNING: could not activate theme_sandbox: ' . \$e->getMessage() . PHP_EOL;
-            }
-        }
-
         // Activate the main plugin.
         \$plugin = elgg_get_plugin_from_id('${PLUGIN_ID}');
         if (!\$plugin) {
@@ -164,7 +139,30 @@ SETTINGS_VALUES
                 exit(1);
             }
         }
+        elgg_reset_system_cache();
+        echo 'System cache reset.' . PHP_EOL;
     " 2>&1 || echo "Plugin activation completed (check for errors above)."
+
+    # Create a test user for Playwright tests
+    php -r "
+        require_once 'vendor/autoload.php';
+        \$app = Elgg\Application::getInstance();
+        \$app->bootCore();
+        if (!get_user_by_username('testuser')) {
+            \$user = new ElggUser();
+            \$user->username = 'testuser';
+            \$user->email = 'testuser@example.com';
+            \$user->name = 'Test User';
+            \$user->access_id = ACCESS_PUBLIC;
+            \$user->setPassword('testuser12345');
+            if (\$user->save()) {
+                \$user->validated = 1;
+                \$user->validated_method = 'admin';
+                \$user->save();
+                echo 'testuser created.' . PHP_EOL;
+            }
+        }
+    " 2>&1
 
     # Hand the data root over to the Apache user. The installer ran as
     # root (entrypoint context) and left every cache subdirectory
@@ -174,7 +172,7 @@ SETTINGS_VALUES
     chmod -R u+rwX,g+rX,o+rX "${ELGG_DATA_ROOT:-/var/www/data/}"
 
     touch /var/www/html/.elgg-installed
-    echo "Elgg 4.x setup complete."
+    echo "Elgg 5.x setup complete."
 fi
 
 echo "Starting Apache..."

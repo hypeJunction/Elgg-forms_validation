@@ -2,21 +2,21 @@
 
 namespace hypeJunction\FormsValidation;
 
-use Elgg\Hook;
+use Elgg\Event;
 
 /**
- * Form validation hook handlers
+ * Form validation event handlers
  */
 class Forms {
 
 	/**
 	 * Filters some of the vars for compatibility with parsley
 	 *
-	 * @param Hook $hook Hook
+	 * @param Event $event Event
 	 * @return array
 	 */
-	public function __invoke(Hook $hook) {
-		$return = $hook->getValue();
+	public function __invoke(Event $event) {
+		$return = $event->getValue();
 
 		if (!is_array($return)) {
 			return;
@@ -33,7 +33,8 @@ class Forms {
 			$return['data-parsley-required'] = 1;
 		}
 
-		if ($validation_rules = \elgg_extract('validation_rules', $return)) {
+		$validation_rules = \elgg_extract('validation_rules', $return);
+		if ($validation_rules) {
 			unset($return['validation_rules']);
 			if (is_array($validation_rules)) {
 				foreach ($validation_rules as $rule => $expectation) {

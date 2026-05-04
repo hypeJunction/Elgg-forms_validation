@@ -15,7 +15,7 @@ if (file_exists("$plugin_root/vendor/autoload.php")) {
 return [
 	'plugin' => [
 		'name' => 'Form validation',
-		'version' => '4.0.0',
+		'version' => '5.0.0',
 	],
 	'view_extensions' => [
 		'input/form' => [
@@ -33,7 +33,7 @@ return [
 			'parsley.js' => $path . '/vendor/bower-asset/parsleyjs/dist/parsley.min.js',
 		],
 	],
-	'hooks' => [
+	'events' => [
 		'view_vars' => [
 			'input/form' => [
 				\hypeJunction\FormsValidation\Forms::class => [],

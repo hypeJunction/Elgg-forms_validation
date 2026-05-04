@@ -2,11 +2,11 @@
 
 namespace hypeJunction\FormsValidation;
 
-use Elgg\Hook;
+use Elgg\Event;
 use Elgg\UnitTestCase;
 
 /**
- * Unit tests for the Forms hook handler.
+ * Unit tests for the Forms event handler.
  *
  * The Forms::__invoke() handler rewrites input/form and elements/forms/input
  * view vars so that Parsley.js validation attributes replace Elgg's native
@@ -23,27 +23,35 @@ class FormsTest extends UnitTestCase {
 	}
 
 	/**
-	 * Build a Hook stub that returns the given value.
+	 * Build an Event stub that returns the given value.
 	 *
 	 * @param mixed $value
-	 * @return Hook
+	 * @return Event
 	 */
-	protected function makeHook($value): Hook {
-		$hook = $this->getMockBuilder(Hook::class)->getMock();
-		$hook->method('getValue')->willReturn($value);
-		return $hook;
+	protected function makeEvent($value): Event {
+		$event = $this->getMockBuilder(Event::class)
+			->disableOriginalConstructor()
+			->getMock();
+		$event->method('getValue')->willReturn($value);
+		return $event;
 	}
 
-	public function testReturnsNullWhenValueIsNotArray(): void {
+	/**
+     * @return void
+     */
+    public function testReturnsNullWhenValueIsNotArray(): void {
 		$handler = new Forms();
-		$this->assertNull($handler($this->makeHook('not-an-array')));
-		$this->assertNull($handler($this->makeHook(null)));
-		$this->assertNull($handler($this->makeHook(42)));
+		$this->assertNull($handler($this->makeEvent('not-an-array')));
+		$this->assertNull($handler($this->makeEvent(null)));
+		$this->assertNull($handler($this->makeEvent(42)));
 	}
 
-	public function testValidateFlagRewrittenToParsleyAttribute(): void {
+	/**
+     * @return void
+     */
+    public function testValidateFlagRewrittenToParsleyAttribute(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['validate' => true, 'action' => '/foo']);
+		$hook = $this->makeEvent(['validate' => true, 'action' => '/foo']);
 		$result = $handler($hook);
 
 		$this->assertIsArray($result);
@@ -53,27 +61,36 @@ class FormsTest extends UnitTestCase {
 		$this->assertSame('/foo', $result['action']);
 	}
 
-	public function testDataParsleyValidateFlagAlsoTriggersDisable(): void {
+	/**
+     * @return void
+     */
+    public function testDataParsleyValidateFlagAlsoTriggersDisable(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['data-parsley-validate' => true]);
+		$hook = $this->makeEvent(['data-parsley-validate' => true]);
 		$result = $handler($hook);
 
 		$this->assertSame(1, $result['data-parsley-validate']);
 		$this->assertSame(1, $result['data-parsley-errors-messages-disabled']);
 	}
 
-	public function testNoValidateFlagLeavesAttributesUntouched(): void {
+	/**
+     * @return void
+     */
+    public function testNoValidateFlagLeavesAttributesUntouched(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['action' => '/bar']);
+		$hook = $this->makeEvent(['action' => '/bar']);
 		$result = $handler($hook);
 
 		$this->assertArrayNotHasKey('data-parsley-validate', $result);
 		$this->assertArrayNotHasKey('data-parsley-errors-messages-disabled', $result);
 	}
 
-	public function testRequiredAttributeRewritten(): void {
+	/**
+     * @return void
+     */
+    public function testRequiredAttributeRewritten(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['required' => true, 'name' => 'title']);
+		$hook = $this->makeEvent(['required' => true, 'name' => 'title']);
 		$result = $handler($hook);
 
 		$this->assertArrayNotHasKey('required', $result);
@@ -81,17 +98,23 @@ class FormsTest extends UnitTestCase {
 		$this->assertSame('title', $result['name']);
 	}
 
-	public function testRequiredFalseLeavesAttributesUntouched(): void {
+	/**
+     * @return void
+     */
+    public function testRequiredFalseLeavesAttributesUntouched(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['required' => false]);
+		$hook = $this->makeEvent(['required' => false]);
 		$result = $handler($hook);
 
 		$this->assertArrayNotHasKey('data-parsley-required', $result);
 	}
 
-	public function testValidationRulesExpandedToParsleyDataAttributes(): void {
+	/**
+     * @return void
+     */
+    public function testValidationRulesExpandedToParsleyDataAttributes(): void {
 		$handler = new Forms();
-$hook = $this->makeHook([
+$hook = $this->makeEvent([
 			'validation_rules' => [
 				'minlength' => 5,
 				'maxlength' => 20,
@@ -106,9 +129,12 @@ $hook = $this->makeHook([
 		$this->assertSame(json_encode('email'), $result['data-parsley-type']);
 	}
 
-	public function testValidationRulesNonArrayIsDropped(): void {
+	/**
+     * @return void
+     */
+    public function testValidationRulesNonArrayIsDropped(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['validation_rules' => 'nope']);
+		$hook = $this->makeEvent(['validation_rules' => 'nope']);
 		$result = $handler($hook);
 
 		$this->assertArrayNotHasKey('validation_rules', $result);
@@ -118,18 +144,24 @@ $hook = $this->makeHook([
 		}
 	}
 
-	public function testErrorsKeyIsAlwaysStripped(): void {
+	/**
+     * @return void
+     */
+    public function testErrorsKeyIsAlwaysStripped(): void {
 		$handler = new Forms();
-		$hook = $this->makeHook(['errors' => ['some' => 'error'], 'action' => '/x']);
+		$hook = $this->makeEvent(['errors' => ['some' => 'error'], 'action' => '/x']);
 		$result = $handler($hook);
 
 		$this->assertArrayNotHasKey('errors', $result);
 		$this->assertSame('/x', $result['action']);
 	}
 
-	public function testCombinedFlagsAllApplied(): void {
+	/**
+     * @return void
+     */
+    public function testCombinedFlagsAllApplied(): void {
 		$handler = new Forms();
-$hook = $this->makeHook([
+$hook = $this->makeEvent([
 			'validate' => true,
 			'required' => true,
 			'validation_rules' => ['minlength' => 3],
@@ -150,9 +182,12 @@ $hook = $this->makeHook([
 		$this->assertSame('combo', $result['name']);
 	}
 
-	public function testEmptyArrayReturnsEmptyArray(): void {
+	/**
+     * @return void
+     */
+    public function testEmptyArrayReturnsEmptyArray(): void {
 		$handler = new Forms();
-		$result = $handler($this->makeHook([]));
+		$result = $handler($this->makeEvent([]));
 
 		$this->assertIsArray($result);
 		$this->assertSame([], $result);

@@ -7,7 +7,7 @@ use Elgg\IntegrationTestCase;
 /**
  * Integration tests for the forms_validation plugin.
  *
- * Verifies that hook handlers are wired, that view extensions are registered,
+ * Verifies that event handlers are wired, that view extensions are registered,
  * and that the theme sandbox demo views render without errors.
  */
 class PluginIntegrationTest extends IntegrationTestCase {
@@ -20,7 +20,10 @@ class PluginIntegrationTest extends IntegrationTestCase {
 		// no-op
 	}
 
-	public function testFormsValidationHookRewritesInputFormVars(): void {
+	/**
+     * @return void
+     */
+    public function testFormsValidationEventRewritesInputFormVars(): void {
 		$vars = [
 			'validate' => true,
 			'required' => true,
@@ -28,7 +31,7 @@ class PluginIntegrationTest extends IntegrationTestCase {
 			'action' => '/test',
 		];
 
-		$result = \elgg_trigger_plugin_hook('view_vars', 'input/form', [], $vars);
+		$result = \elgg_trigger_event_results('view_vars', 'input/form', [], $vars);
 
 		$this->assertIsArray($result);
 		$this->assertArrayNotHasKey('validate', $result);
@@ -39,27 +42,36 @@ class PluginIntegrationTest extends IntegrationTestCase {
 		$this->assertSame(json_encode(5), $result['data-parsley-minlength']);
 	}
 
-	public function testFormsValidationHookRewritesElementsFormsInputVars(): void {
+	/**
+     * @return void
+     */
+    public function testFormsValidationEventRewritesElementsFormsInputVars(): void {
 		$vars = ['required' => true, 'name' => 'title'];
 
-		$result = \elgg_trigger_plugin_hook('view_vars', 'elements/forms/input', [], $vars);
+		$result = \elgg_trigger_event_results('view_vars', 'elements/forms/input', [], $vars);
 
 		$this->assertIsArray($result);
 		$this->assertArrayNotHasKey('required', $result);
 		$this->assertSame(1, $result['data-parsley-required']);
 	}
 
-	public function testFormsValidationHookLeavesPlainVarsUntouched(): void {
+	/**
+     * @return void
+     */
+    public function testFormsValidationEventLeavesPlainVarsUntouched(): void {
 		$vars = ['action' => '/plain', 'method' => 'POST'];
 
-		$result = \elgg_trigger_plugin_hook('view_vars', 'input/form', [], $vars);
+		$result = \elgg_trigger_event_results('view_vars', 'input/form', [], $vars);
 
 		$this->assertSame('/plain', $result['action']);
 		$this->assertSame('POST', $result['method']);
 		$this->assertArrayNotHasKey('data-parsley-validate', $result);
 	}
 
-	public function testValidationViewRendersWithParsleyFlag(): void {
+	/**
+     * @return void
+     */
+    public function testValidationViewRendersWithParsleyFlag(): void {
 $output = \elgg_view('elements/forms/validation', [
 			'data-parsley-validate' => 1,
 		]);
@@ -67,14 +79,20 @@ $output = \elgg_view('elements/forms/validation', [
 		$this->assertStringContainsString('parsley', $output);
 	}
 
-	public function testValidationViewEmptyWithoutFlag(): void {
+	/**
+     * @return void
+     */
+    public function testValidationViewEmptyWithoutFlag(): void {
 		$output = \elgg_view('elements/forms/validation', []);
 		$this->assertIsString($output);
 		// Without the flag, the view should return nothing.
 		$this->assertSame('', trim($output));
 	}
 
-	public function testThemeSandboxFormRenders(): void {
+	/**
+     * @return void
+     */
+    public function testThemeSandboxFormRenders(): void {
 		$output = \elgg_view('theme_sandbox/forms/validation');
 		$this->assertIsString($output);
 		$this->assertNotEmpty($output);
@@ -82,7 +100,10 @@ $output = \elgg_view('elements/forms/validation', [
 		$this->assertStringContainsString('Form Validation', $output);
 	}
 
-	public function testThemeSandboxFormBodyContainsInputs(): void {
+	/**
+     * @return void
+     */
+    public function testThemeSandboxFormBodyContainsInputs(): void {
 		$output = \elgg_view('theme_sandbox/forms/validation/form');
 		$this->assertIsString($output);
 		$this->assertNotEmpty($output);
