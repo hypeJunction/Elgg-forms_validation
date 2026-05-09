@@ -15,7 +15,7 @@ if (file_exists("$plugin_root/vendor/autoload.php")) {
 return [
 	'plugin' => [
 		'name' => 'Form validation',
-		'version' => '6.0.0',
+		'version' => '7.0.0',
 	],
 	'view_extensions' => [
 		'input/form' => [

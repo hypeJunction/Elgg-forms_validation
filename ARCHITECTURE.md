@@ -1,4 +1,4 @@
-# forms_validation — Architecture (Elgg 6.x)
+# forms_validation — Architecture (Elgg 7.x)
 
 ## Summary
 
@@ -78,6 +78,14 @@ forms_validation/
 - **PHP**: `>=8.2`
 
 No plugin-level dependencies. Compatible with any Elgg 5.x installation.
+
+## Migration Notes (6.x → 7.x)
+
+- `elgg/elgg ~7.0.0`, `php >=8.3` in `composer.json`.
+- `extra.elgg-plugin.elgg-release` updated to `~7.0`.
+- Plugin version bumped to `7.0.0` in `elgg-plugin.php`.
+- Docker test stack added for Elgg 7.x (docker/elgg7/).
+- No data migration needed (plugin has no persistent state).
 
 ## Migration Notes (5.x → 6.x)
 
