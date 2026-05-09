@@ -1,4 +1,4 @@
-# forms_validation — Architecture (Elgg 5.x)
+# forms_validation — Architecture (Elgg 6.x)
 
 ## Summary
 
@@ -78,6 +78,13 @@ forms_validation/
 - **PHP**: `>=8.2`
 
 No plugin-level dependencies. Compatible with any Elgg 5.x installation.
+
+## Migration Notes (5.x → 6.x)
+
+- `elgg/elgg ~6.1.0`, `php >=8.1`, `ext-intl` added in `composer.json`.
+- `validation.js` converted from AMD (`define(function(require){...})`) to ES module (`import i18n from 'elgg/i18n'; import $ from 'jquery'; import 'parsley.js';`).
+- Docker test stack added for Elgg 6.x (docker/elgg6/).
+- No data migration needed.
 
 ## Migration Notes (4.x → 5.x)
 

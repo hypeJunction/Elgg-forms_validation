@@ -1,3 +1,12 @@
+## [6.0.0] — 2026-05-09
+
+### Migration: 5.x → 6.x
+
+- `elgg/elgg ~6.1.0`, `php >=8.1`, `ext-intl` added in `composer.json`
+- `validation.js` converted from AMD to ES module
+- Docker test stack added for Elgg 6.x (docker/elgg6/)
+- No data migration required
+
 ## [5.0.0] — 2026-05-04
 
 ### Migration: 4.x → 5.x

@@ -14,8 +14,9 @@
 	"require": {
 		"composer/installers": "^2.0",
 		"bower-asset/parsleyjs": "~2.3",
-		"php": ">=8.2",
-		"elgg/elgg": "^5.0"
+		"php": ">=8.1",
+		"ext-intl": "*",
+		"elgg/elgg": "~6.1.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -29,7 +30,7 @@
 	},
 	"extra": {
 		"elgg-plugin": {
-			"elgg-release": "~5.0",
+			"elgg-release": "~6.1",
 			"id": "forms_validation"
 		}
 	}
