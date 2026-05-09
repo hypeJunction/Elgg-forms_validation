@@ -1,6 +1,22 @@
-.elgg-field-has-errors .elgg-field-label { color: #C24000; }
-.elgg-field-has-errors [class^="elgg-input-"] { border-color: #C24000; }
+:root {
+	--forms-validation-error-color: #C24000;
+}
 
-.elgg-field-feedback { list-style: none; font-size: 90%; font-weight: bold; }
+.elgg-field-has-errors .elgg-field-label {
+	color: var(--forms-validation-error-color);
+}
 
-.elgg-field-error { padding: 5px; color: #C24000; }
+.elgg-field-has-errors [class^="elgg-input-"] {
+	border-color: var(--forms-validation-error-color);
+}
+
+.elgg-field-feedback {
+	list-style: none;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+.elgg-field-error {
+	padding: 5px;
+	color: var(--forms-validation-error-color);
+}
