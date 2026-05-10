@@ -31,7 +31,6 @@ echo elgg_view('input/form', array(
 ));
 ```
 
-
 ## Compatibility
 
 | Plugin version | Elgg version |
