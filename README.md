@@ -1,6 +1,6 @@
 Form validation component for Elgg
 ==================================
-![Elgg 5.x](https://img.shields.io/badge/Elgg-5.x-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 ## Screenshots ##
 ![Invalid input](https://raw.github.com/hypeJunction/Elgg-forms_validation/master/screenshots/validation.png "Invalid input")
@@ -31,3 +31,9 @@ echo elgg_view('input/form', array(
 ));
 ```
 
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
