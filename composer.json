@@ -1,6 +1,5 @@
 {
     "name": "hypejunction/forms_validation",
-    "version": "7.0.0",
     "type": "elgg-plugin",
     "description": "Form validation components for Elgg",
     "homepage": "https://github.com/hypeJunction/Elgg-forms_validation",
