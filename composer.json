@@ -1,37 +1,37 @@
 {
-	"name": "hypejunction/forms_validation",
-	"version": "5.0.0",
-	"type": "elgg-plugin",
-	"description": "Form validation components for Elgg",
-	"homepage": "https://github.com/hypeJunction/Elgg-forms_validation",
-	"keywords": [
-		"elgg",
-		"plugin",
-		"forms",
-		"validation"
-	],
-	"license": "GPL-2.0",
-	"require": {
-		"composer/installers": "^2.0",
-		"php": ">=8.1",
-		"elgg/elgg": "~6.1.0",
-		"bower-asset/parsleyjs": "~2.3",
-		"ext-intl": "*"
-	},
-	"autoload": {
-		"psr-4": {
-			"hypeJunction\\FormsValidation\\": "classes/hypeJunction/FormsValidation/"
-		}
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		}
-	},
-	"extra": {
-		"elgg-plugin": {
-			"elgg-release": "~6.1",
-			"id": "forms_validation"
-		}
-	}
+    "name": "hypejunction/forms_validation",
+    "version": "6.0.0",
+    "type": "elgg-plugin",
+    "description": "Form validation components for Elgg",
+    "homepage": "https://github.com/hypeJunction/Elgg-forms_validation",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "forms",
+        "validation"
+    ],
+    "license": "GPL-2.0",
+    "require": {
+        "composer/installers": "^2.0",
+        "php": ">=8.1",
+        "elgg/elgg": "~6.1.0",
+        "bower-asset/parsleyjs": "~2.3",
+        "ext-intl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "hypeJunction\\FormsValidation\\": "classes/hypeJunction/FormsValidation/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "extra": {
+        "elgg-plugin": {
+            "elgg-release": "~6.1",
+            "id": "forms_validation"
+        }
+    }
 }
