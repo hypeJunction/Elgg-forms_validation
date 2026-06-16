@@ -76,3 +76,9 @@ window.Parsley.on('field:success', function () {
 	$row.removeClass('elgg-field-has-errors').addClass('elgg-field-no-errors');
 	$row.find('.elgg-field-feedback').html('');
 });
+
+// Bind Parsley to every opted-in form once the DOM is ready.
+// (Previously an inline AMD require() in elements/forms/validation.php.)
+$(function () {
+	$('[data-parsley-validate]').parsley();
+});

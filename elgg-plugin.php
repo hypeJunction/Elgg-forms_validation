@@ -17,6 +17,7 @@ return [
 		'name' => 'Form validation',
 		'version' => '7.0.0',
 	],
+	'bootstrap' => \hypeJunction\FormsValidation\Bootstrap::class,
 	'view_extensions' => [
 		'input/form' => [
 			'elements/forms/validation' => [],
