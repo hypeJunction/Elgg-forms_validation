@@ -29,11 +29,6 @@ return [
 			'elements/forms/validation.css' => [],
 		],
 	],
-	'views' => [
-		'default' => [
-			'parsley.js' => $path . '/vendor/bower-asset/parsleyjs/dist/parsley.min.js',
-		],
-	],
 	'events' => [
 		'view_vars' => [
 			'input/form' => [
