@@ -17,6 +17,7 @@ return [
 		'name' => 'Form validation',
 		'version' => '7.0.0',
 	],
+	'bootstrap' => \hypeJunction\FormsValidation\Bootstrap::class,
 	'view_extensions' => [
 		'input/form' => [
 			'elements/forms/validation' => [],
@@ -26,11 +27,6 @@ return [
 		],
 		'elgg.css' => [
 			'elements/forms/validation.css' => [],
-		],
-	],
-	'views' => [
-		'default' => [
-			'parsley.js' => $path . '/vendor/bower-asset/parsleyjs/dist/parsley.min.js',
 		],
 	],
 	'events' => [
