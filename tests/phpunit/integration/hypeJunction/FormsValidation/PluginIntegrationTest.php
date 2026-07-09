@@ -111,4 +111,25 @@ $output = \elgg_view('elements/forms/validation', [
 		$this->assertStringContainsString('textarea', $output);
 		$this->assertStringContainsString('state', $output);
 	}
+
+	/**
+     * End-to-end registration proof on a booted Elgg 7: rendering the core
+     * input/form view with validate => true fires the view_vars event
+     * (rewriting validate -> data-parsley-validate) so the rendered <form>
+     * element carries the Parsley attribute. Exercises the event handler wiring
+     * and the input/form view extension together.
+     *
+     * @return void
+     */
+    public function testInputFormRenderAppliesParsleyAttribute(): void {
+		$output = \elgg_view('input/form', [
+			'validate' => true,
+			'body' => 'placeholder',
+		]);
+
+		$this->assertIsString($output);
+		$this->assertStringContainsString('<form', $output);
+		// The event rewrote validate -> data-parsley-validate before render.
+		$this->assertStringContainsString('data-parsley-validate', $output);
+	}
 }
